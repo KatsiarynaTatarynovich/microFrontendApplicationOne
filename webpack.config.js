@@ -3,15 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 module.exports = (_, argv) => ({
-  entry: {},
   output: {
-    publicPath: argv.mode === 'development' ? 'http://localhost:9001/' : 'https://micro-frontend-application-one.vercel.app/'
+    publicPath:
+        argv.mode === 'development'
+            ? 'http://localhost:9001/'
+            : 'https://micro-frontend-application-one.vercel.app/',
   },
-  devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 9001,
-    watchContentBase: true
+    port: 9001
   },
   module: {
     rules: [
@@ -29,17 +28,13 @@ module.exports = (_, argv) => ({
   resolve: {
     modules: [path.resolve(__dirname, 'node_modules')],
   },
-  optimization: {
-    minimize: false
-  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'applicationOne',
-      library: { type: 'var', name: 'applicationOne' },
       filename: 'applicationOne.js',
       remotes: {
-        rootApplication: 'rootApplication@http://localhost:9000/rootApplication.js',
-        applicationTwo: 'applicationTwo@http://localhost:9002/applicationTwo.js'
+        rootApplication: 'rootApplication',
+        applicationTwo: 'applicationTwo'
       },
       exposes: {
         './ApplicationOne': './src/applicationOne'
