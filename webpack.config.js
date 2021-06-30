@@ -38,8 +38,8 @@ module.exports = (_, argv) => ({
       library: { type: 'var', name: 'applicationOne' },
       filename: 'applicationOne.js',
       remotes: {
-        rootApplication: 'rootApplication',
-        applicationTwo: 'applicationTwo'
+        rootApplication: 'rootApplication@http://localhost:9000/rootApplication.js',
+        applicationTwo: 'applicationTwo@http://localhost:9002/applicationTwo.js'
       },
       exposes: {
         './ApplicationOne': './src/applicationOne'
