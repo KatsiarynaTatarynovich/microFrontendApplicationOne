@@ -5,7 +5,7 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 module.exports = (_, argv) => ({
   entry: {},
   output: {
-    publicPath: argv.mode === 'development' && 'http://localhost:9001/'
+    publicPath: argv.mode === 'development' ? 'http://localhost:9001/' : 'https://micro-frontend-application-one.vercel.app/'
   },
   devtool: 'source-map',
   devServer: {
