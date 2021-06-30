@@ -3,10 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 module.exports = (_, argv) => ({
-  entry: {
-    applicationOne: './public-path',
-  },
+  entry: './src/applicationOne.js',
   output: {
+    filename: `applicationOne.js`,
+    path: path.resolve(process.cwd(), 'dist'),
     publicPath:
         argv.mode === 'development'
             ? 'http://localhost:9001/'
@@ -31,15 +31,21 @@ module.exports = (_, argv) => ({
   resolve: {
     modules: [path.resolve(__dirname, 'node_modules')],
   },
+  optimization: {
+    minimize: false
+  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'applicationOne',
+      library: { type: 'var', name: 'applicationOne' },
       filename: 'applicationOne.js',
       remotes: {
         rootApplication: 'rootApplication',
         applicationTwo: 'applicationTwo'
       },
-      exposes: ['./public-path'],
+      exposes: {
+        './ApplicationOne': './src/applicationOne'
+      },
       shared: ['react', 'react-dom', 'single-spa-react']
     }),
     new HtmlWebpackPlugin({ template: './index.html' })
