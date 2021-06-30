@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 module.exports = (_, argv) => ({
+  entry: {
+    applicationOne: './public-path',
+  },
   output: {
     publicPath:
         argv.mode === 'development'
@@ -36,9 +39,7 @@ module.exports = (_, argv) => ({
         rootApplication: 'rootApplication',
         applicationTwo: 'applicationTwo'
       },
-      exposes: {
-        './ApplicationOne': './src/applicationOne'
-      },
+      exposes: ['./public-path'],
       shared: ['react', 'react-dom', 'single-spa-react']
     }),
     new HtmlWebpackPlugin({ template: './index.html' })
