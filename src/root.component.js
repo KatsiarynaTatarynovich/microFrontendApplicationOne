@@ -4,6 +4,7 @@ export default function Root(props) {
   const src = props
     .getCommonImages()
     .find((img) => img.name === "Norway").image;
+  console.log("props", props);
 
   return (
     <div
